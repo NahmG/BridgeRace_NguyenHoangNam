@@ -26,9 +26,9 @@ public class PlayerMoveState : MoveState
         base.FixedUpdate();
 
         if (Core.SENSOR.IsGoUpBridge)
-        {
-
-        }
+            Core.MOVEMENT.ApplyGravity(0);
+        else
+            Core.MOVEMENT.ApplyGravity(100);
     }
 
     public override void Exit()

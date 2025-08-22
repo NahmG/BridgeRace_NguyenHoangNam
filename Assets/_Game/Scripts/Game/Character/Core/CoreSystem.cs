@@ -13,59 +13,56 @@ namespace Core
 
     public abstract class CoreSystem : MonoBehaviour
     {
-        [SerializeField]
-        List<BaseCore> cores;
-
-        Dictionary<Type, BaseCore> compDict = new();
-
         public CharacterStats Stats { get; private set; }
+        [SerializeField]
+        MovementCore _movement;
+        public MovementCore MOVEMENT => _movement;
+        [SerializeField]
+        DisplayCore _display;
+        public DisplayCore DISPLAY => _display;
+        [SerializeField]
+        NavigationCore _navigation;
+        public NavigationCore NAVIGATION => _navigation;
+        [SerializeField]
+        SensorCore _sensor;
+        public SensorCore SENSOR => _sensor;
 
-        public MovementCore MOVEMENT => GetCoreComponent<MovementCore>();
+        List<BaseCore> cores = new();
 
-        public DisplayCore DISPLAY => GetCoreComponent<DisplayCore>();
-
-        public NavigationCore NAVIGATION => GetCoreComponent<NavigationCore>();
-
-        public SensorCore SENSOR => GetCoreComponent<SensorCore>();
+        void Awake()
+        {
+            SENSOR.ReceiveInfo(NAVIGATION);
+        }
 
         public virtual void Initialize(CharacterStats stats)
         {
             Stats = stats;
 
-            SENSOR.ReceiveInfo(NAVIGATION);
+            MOVEMENT.Initialize(this);
+            DISPLAY.Initialize(this);
+            NAVIGATION.Initialize(this);
+            SENSOR.Initialize(this);
         }
 
         public virtual void UpdateData()
         {
-            foreach (var key in compDict.Keys)
+            foreach (var comp in cores)
             {
-                compDict[key].UpdateData();
+                comp.UpdateData();
             }
         }
 
         public virtual void FixedUpdate()
         {
-            foreach (var key in compDict.Keys)
+            foreach (var comp in cores)
             {
-                compDict[key].FixedUpdateData();
+                comp.FixedUpdateData();
             }
         }
 
-        T GetCoreComponent<T>() where T : BaseCore
+        public void AddCoreComp(BaseCore comp)
         {
-            var type = typeof(T);
-            if (!compDict.ContainsKey(type) || compDict[type] == null)
-            {
-                var comp = cores.FirstOrDefault() as T ??
-                        GetComponentInChildren<T>() ??
-                        new GameObject().AddComponent<T>();
-
-                comp.transform.SetParent(transform);
-                comp.Initialize();
-                compDict[type] = comp;
-            }
-
-            return compDict[type] as T;
+            cores.Add(comp);
         }
     }
 }

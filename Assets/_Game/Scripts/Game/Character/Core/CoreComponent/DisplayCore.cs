@@ -13,10 +13,6 @@ namespace Core.Display
 
         string currentAnim;
 
-        public override void Initialize()
-        {
-        }
-
         public void SetSkinRotation(Quaternion rotation, bool isLocal)
         {
             if (isLocal)

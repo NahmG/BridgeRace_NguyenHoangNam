@@ -22,9 +22,9 @@ namespace Core.Sensor
             this.Navigation = Navigation;
         }
 
-        public override void Initialize()
+        public override void Initialize(CoreSystem core)
         {
-            base.Initialize();
+            base.Initialize(core);
 
             foreach (var sensor in sensors)
             {

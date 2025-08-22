@@ -13,7 +13,7 @@ namespace Core.Sensor
         {
             base.UpdateData();
 
-            // Sensor.IsGoUpBridge = Physics.Raycast(bridgeCheck.position, Navigation.MoveDirection, checkDistance, layer);
+            Sensor.IsGoUpBridge = Physics.Raycast(bridgeCheck.position, Navigation.MoveDirection, checkDistance, layer);
         }
     }
 }

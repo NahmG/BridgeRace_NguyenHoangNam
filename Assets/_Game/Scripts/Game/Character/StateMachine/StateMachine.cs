@@ -27,6 +27,7 @@ public class StateMachine
         currentState?.Exit();
         currentState = null;
     }
+
     public void AddState(STATE id, BaseState state)
     {
         if (!states.ContainsKey(id))
@@ -35,6 +36,7 @@ public class StateMachine
             states[id]._OnStateChanged += ChangeState;
         }
     }
+
     public void RemoveState(STATE id)
     {
         if (states.ContainsKey(id))
