@@ -25,7 +25,7 @@ public class PlayerMoveState : MoveState
     {
         base.FixedUpdate();
 
-        if (Core.SEN.IsGoUpBridge)
+        if (Core.SENSOR.IsGoUpBridge)
         {
 
         }

@@ -3,12 +3,14 @@ using UnityEngine;
 
 namespace Core.Sensor
 {
+    using Navigation;
     public class SensorCore : BaseCore
     {
         [SerializeField]
         List<BaseSensor> sensors;
 
         // ----------- PARAM ---------------
+        [field: SerializeField]
         public NavigationCore Navigation { get; protected set; }
 
         // ----------- DATA --------------
@@ -23,6 +25,7 @@ namespace Core.Sensor
         public override void Initialize()
         {
             base.Initialize();
+
             foreach (var sensor in sensors)
             {
                 sensor.Initialize(this, Navigation);

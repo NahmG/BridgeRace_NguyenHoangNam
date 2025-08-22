@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public abstract class MovementCore : BaseCore
+namespace Core.Movement
 {
-    public virtual void SetVelocity(Vector3 velocity) { }
-    public virtual void ApplyGravity(float scale) { }
+    public abstract class MovementCore : BaseCore
+    {
+        public virtual void SetVelocity(Vector3 velocity) { }
+        public virtual void ApplyGravity(float scale) { }
+    }
 }

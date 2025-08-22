@@ -1,29 +1,32 @@
 using UnityEngine;
 
-public class PlayerMovement : MovementCore
+namespace Core.Movement
 {
-    [SerializeField]
-    CharacterController controller;
-    [SerializeField]
-    float gravityScale;
-
-    Vector3 velocity;
-    readonly float gravity = -9.81f;
-
-    public override void UpdateData()
+    public class PlayerMovement : MovementCore
     {
-        base.UpdateData();
+        [SerializeField]
+        CharacterController controller;
+        [SerializeField]
+        float gravityScale;
 
-        controller.Move(velocity * Time.deltaTime);
-    }
+        Vector3 velocity;
+        readonly float gravity = -9.81f;
 
-    public override void SetVelocity(Vector3 velocity)
-    {
-        this.velocity = velocity;
-    }
+        public override void UpdateData()
+        {
+            base.UpdateData();
 
-    public override void ApplyGravity(float scale)
-    {
-        velocity += scale * gravity * Vector3.up;
+            controller.Move(velocity * Time.deltaTime);
+        }
+
+        public override void SetVelocity(Vector3 velocity)
+        {
+            this.velocity = velocity;
+        }
+
+        public override void ApplyGravity(float scale)
+        {
+            velocity += scale * gravity * Vector3.up;
+        }
     }
 }

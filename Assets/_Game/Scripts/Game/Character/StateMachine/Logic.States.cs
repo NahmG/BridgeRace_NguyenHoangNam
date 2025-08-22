@@ -26,7 +26,7 @@ public abstract class GroundedState : BaseLogicState
 
     public override void Update()
     {
-        if (!Core.SEN.IsGrounded)
+        if (!Core.SENSOR.IsGrounded)
         {
             ChangeState(STATE.IN_AIR);
         }
@@ -44,14 +44,14 @@ public abstract class IdleState : GroundedState
     public override void Enter()
     {
         base.Enter();
-        Core.DIS.ChangeAnim(CONSTANTS.IDLE_ANIM_NAME);
-        Core.MOVE.SetVelocity(Vector3.zero);
+        Core.DISPLAY.ChangeAnim(CONSTANTS.IDLE_ANIM_NAME);
+        Core.MOVEMENT.SetVelocity(Vector3.zero);
     }
 
     public override void Update()
     {
         base.Update();
-        if (Core.NAV.MoveDirection.sqrMagnitude > .01f)
+        if (Core.NAVIGATION.MoveDirection.sqrMagnitude > .01f)
         {
             ChangeState(STATE.MOVE);
         }
@@ -69,12 +69,12 @@ public abstract class MoveState : GroundedState
     public override void Enter()
     {
         base.Enter();
-        Core.DIS.ChangeAnim(CONSTANTS.RUN_ANIM_NAME);
+        Core.DISPLAY.ChangeAnim(CONSTANTS.RUN_ANIM_NAME);
     }
 
     public override void Update()
     {
-        if (Core.NAV.MoveDirection.sqrMagnitude < .01f)
+        if (Core.NAVIGATION.MoveDirection.sqrMagnitude < .01f)
         {
             ChangeState(STATE.IDLE);
         }
@@ -82,14 +82,14 @@ public abstract class MoveState : GroundedState
 
     public override void FixedUpdate()
     {
-        if (Core.NAV.MoveDirection.sqrMagnitude < .01f)
+        if (Core.NAVIGATION.MoveDirection.sqrMagnitude < .01f)
             return;
 
-        Vector3 move = Core.NAV.MoveDirection;
+        Vector3 move = Core.NAVIGATION.MoveDirection;
         move.y = 0;
 
-        Core.DIS.SetSkinRotation(Quaternion.LookRotation(move), true);
-        Core.MOVE.SetVelocity(move * Core.Stats.Speed.Value);
+        Core.DISPLAY.SetSkinRotation(Quaternion.LookRotation(move), true);
+        Core.MOVEMENT.SetVelocity(move * Core.Stats.Speed.Value);
     }
 }
 
@@ -105,9 +105,9 @@ public abstract class InAirState : BaseLogicState
 
     public override void Update()
     {
-        if (Core.SEN.IsGrounded)
+        if (Core.SENSOR.IsGrounded)
         {
-            if (Core.NAV.MoveDirection.sqrMagnitude > 0.01f)
+            if (Core.NAVIGATION.MoveDirection.sqrMagnitude > 0.01f)
                 ChangeState(STATE.MOVE);
             else
                 ChangeState(STATE.IDLE);
@@ -116,7 +116,7 @@ public abstract class InAirState : BaseLogicState
 
     public override void FixedUpdate()
     {
-        Core.MOVE.ApplyGravity(1);
+        Core.MOVEMENT.ApplyGravity(1);
     }
 }
 #endregion

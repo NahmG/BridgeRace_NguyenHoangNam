@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Core.Sensor
 {
+    using Navigation;
     public class DetectGroundSensor : BaseSensor
     {
         [SerializeField]

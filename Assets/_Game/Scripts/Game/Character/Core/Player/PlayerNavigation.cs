@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class PlayerNavigation : NavigationCore
+namespace Core.Navigation
 {
-    [SerializeField]
-    Joystick stick;
-
-    public override void UpdateData()
+    public class PlayerNavigation : NavigationCore
     {
-        float horizontal = stick.Horizontal;
-        float vertical = stick.Vertical;
+        [SerializeField]
+        Joystick stick;
 
-        Vector3 move = new(horizontal, 0, vertical);
-        MoveDirection = move.normalized;
+        public override void UpdateData()
+        {
+            float horizontal = stick.Horizontal;
+            float vertical = stick.Vertical;
+
+            Vector3 move = new(horizontal, 0, vertical);
+            MoveDirection = move.normalized;
+        }
     }
 }
