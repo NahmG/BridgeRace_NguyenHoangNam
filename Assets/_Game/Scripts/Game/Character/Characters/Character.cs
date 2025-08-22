@@ -1,16 +1,37 @@
 using UnityEngine;
 
-public class Character : MonoBehaviour
+using Core;
+public class Character : GameUnit, ICharacter
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    protected CharacterStats Stats;
+    [SerializeField]
+    CoreSystem core;
+
+    public bool IsDie => Stats.HP.Value <= 0;
+
+    public void OnInit(CharacterStats stats = null)
     {
-        
+        if (stats == null)
+            Stats.Reset();
+        else
+            Stats = stats;
     }
 
-    // Update is called once per frame
+    void OnEnable()
+    {
+        core.Initialize(Stats);
+    }
+
     void Update()
     {
-        
+        core.UpdateData();
     }
+
+    protected override void FixedUpdate()
+    {
+        core.FixedUpdate();
+    }
+
+
 }

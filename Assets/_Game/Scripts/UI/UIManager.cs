@@ -23,8 +23,6 @@ public class UIManager : Singleton<UIManager>
     {
         get
         {
-            //DevLog.Log(DevId.Hung, "Scale: " + GameplayCanvas.scaleFactor + "Screen Density: " + MaxSdkUtils.GetScreenDensity());
-            //return 168 / (canvasUI.scaleFactor * MaxSdkUtils.GetScreenDensity());
             float unitHeight = parentCanvasTf.rect.height;
             float pixelHeight = Screen.height;
             return 168 / pixelHeight * unitHeight;
@@ -184,15 +182,6 @@ public class UIManager : Singleton<UIManager>
             return canvas;
         }
     }
-
-
-    // private void LateUpdate()
-    // {
-    //     if (Input.GetKey(KeyCode.Escape) && BackTopUI != null)
-    //     {
-    //         BackActionEvents[BackTopUI]?.Invoke();
-    //     }
-    // }
 
     public void PushBackAction(UICanvas canvas, UnityAction action)
     {
